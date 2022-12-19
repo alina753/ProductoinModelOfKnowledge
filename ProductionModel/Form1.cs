@@ -175,38 +175,6 @@ namespace ProductionModel
             }
         }
 
-        /*private void button2_Click(object sender, EventArgs e)//Обратный вывод
-        {
-            label1.Text = "Обратный вывод";
-            listBox3.Items.Clear();
-
-            int depth = 0;
-            bool change = false;
-            for(int k = 0; k < rules.Keys.Count; k++)
-            {
-                for(int i = 0; i < using_facts.Count; i++)
-                {
-                    string key_fact = rules.ElementAt(k).Key;
-                    if (using_facts[i] == key_fact)
-                    {
-                        change = true;
-                        using_facts.Remove(key_fact);
-                        List<string> purpose_facts = rules[key_fact];
-                        for (int j = 0; j < purpose_facts.Count; j++)
-                            if(!using_facts.Contains(purpose_facts[j]))
-                                using_facts.Add(purpose_facts[j]);
-                        k = 0;
-                        depth++;
-                    }
-                }
-            }
-            if(change)
-            {
-                for (int i = 0; i < using_facts.Count; i++)
-                    listBox3.Items.Add(inverseDic_facts[using_facts[i]]);
-            }
-        }*/
-
         private void button2_Click(object sender, EventArgs e)//Обратный вывод
         {
             label1.Text = "Обратный вывод";
@@ -223,7 +191,7 @@ namespace ProductionModel
             List<TreeFactsNode> children = new List<TreeFactsNode>();
             TreeFactsNode root = new TreeFactsNode(id_fact, children);
             
-            Recurse(root);
+            Reverse_output(root);
 
             if (root.IsCover == true)
                 label_res_reverse_output.Text = "Из выбранных фактов вывод возможен";
@@ -257,42 +225,52 @@ namespace ProductionModel
                 }
             }
         }
-        private void Recurse(TreeFactsNode root)
+        private void Reverse_output(TreeFactsNode root)
         {
             if (root == null) return;
 
-            for(int i = 0; i < using_facts.Count; i++)//отмечаем узлы-истинные_факты
-            {
-                if (root.Value == using_facts[i])
-                {
-                    root.IsCover = true;
-                    break;
-                }
-            }
+            TreeFactsNode root_1;
+            Stack<TreeFactsNode> stack = new Stack<TreeFactsNode>();
+            stack.Push(root);
 
-            for (int i = 0; i < rules.Keys.Count; i++)//идем по правилам
+
+            while (stack.Count > 0)
             {
-                string key_fact = rules.ElementAt(i).Value[0];
-                if (key_fact == root.Value)
+                root_1 = root;
+                root = stack.Pop();
+
+                for (int i = 0; i < using_facts.Count; i++)//отмечаем узлы-истинные_факты
                 {
-                    string rule_id = rules.ElementAt(i).Key;
-                    List<string> rule = rules.ElementAt(i).Value;
-                    listbox4_rules_completion(i);//добавляем в список используемых правил
-                    List<string> children = new List<string>();
-                    for (int j = 1; j < rule.Count; j++)
+                    if (root.Value == using_facts[i])
                     {
-                        children.Add(rule[j]);
-                    }
-                    for (int j = 0; j < children.Count; j++)
-                    {
-                        List<TreeFactsNode> empty_node_list = new List<TreeFactsNode>();
-                        TreeFactsNode c = new TreeFactsNode(root, children[j], empty_node_list);
-                        root.Children.Add(c);
-                        Recurse(c);
-                    }
-                    if (root.Children.Where(x => x.IsCover == true).Count() == 2)//если дочерние узлы отмечены, то отмечаем родителя
                         root.IsCover = true;
-                    //break;
+                        break;
+                    }
+                }
+
+                if (root_1.IsCover && root.IsCover)
+                    if (root_1.Parent == root.Parent)
+                        root.Parent.IsCover = true;
+
+                for (int i = 0; i < rules.Keys.Count; i++)//идем по правилам
+                {
+                    string key_fact = rules.ElementAt(i).Value[0];
+                    if (key_fact == root.Value)
+                    {
+                        string rule_id = rules.ElementAt(i).Key;
+                        List<string> rule = rules.ElementAt(i).Value;
+                        listbox4_rules_completion(i);//добавляем в список используемых правил
+                        List<string> children = new List<string>();
+                        List<TreeFactsNode> empty_node_list = new List<TreeFactsNode>();
+                        for (int j = 1; j < rule.Count; j++)
+                        {
+                            TreeFactsNode c = new TreeFactsNode(root, rule[j], empty_node_list);
+                            root.Children.Add(c);
+
+                            //Recurse(c);
+                            stack.Push(c);
+                        }
+                    }
                 }
             }
         }
