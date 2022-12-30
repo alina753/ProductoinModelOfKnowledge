@@ -144,11 +144,18 @@ namespace ProductionModel
         {
             int depth = 0;
             int k = -1;
+
+            for (int i = 0; i < using_facts.Count; i++)
+            {
+                TreeFactsNode fact = new TreeFactsNode(using_facts[i], new List<TreeFactsNode>());
+                Addition_using_facts_recurse(fact);
+            }
+
             foreach (var rule in rules)
             {
                 k++;
                 List<string> cur_facts = new List<string>();
-                for(int i = 1; i< rule.Value.Count; i++)
+                for(int i = 1; i < rule.Value.Count; i++)//факты текущего правила
                 {
                     cur_facts.Add(rule.Value[i]);
                 }
@@ -164,8 +171,9 @@ namespace ProductionModel
                             if (count_match == cur_facts.Count)
                             {
                                 using_facts.Add(rule.Value[0]);
-                                listBox3.Items.Add(inverseDic_facts[rule.Value[0]]);
-                                listbox4_rules_completion(k);
+                                if(!listBox3.Items.Contains(inverseDic_facts[rule.Value[0]]))
+                                    listBox3.Items.Add(inverseDic_facts[rule.Value[0]]);
+                                Print(k);
                                 depth++;
                             }
                             break;
@@ -175,48 +183,22 @@ namespace ProductionModel
             }
         }
 
-        /*private void button2_Click(object sender, EventArgs e)//Обратный вывод
-        {
-            label1.Text = "Обратный вывод";
-            listBox3.Items.Clear();
-
-            int depth = 0;
-            bool change = false;
-            for(int k = 0; k < rules.Keys.Count; k++)
-            {
-                for(int i = 0; i < using_facts.Count; i++)
-                {
-                    string key_fact = rules.ElementAt(k).Key;
-                    if (using_facts[i] == key_fact)
-                    {
-                        change = true;
-                        using_facts.Remove(key_fact);
-                        List<string> purpose_facts = rules[key_fact];
-                        for (int j = 0; j < purpose_facts.Count; j++)
-                            if(!using_facts.Contains(purpose_facts[j]))
-                                using_facts.Add(purpose_facts[j]);
-                        k = 0;
-                        depth++;
-                    }
-                }
-            }
-            if(change)
-            {
-                for (int i = 0; i < using_facts.Count; i++)
-                    listBox3.Items.Add(inverseDic_facts[using_facts[i]]);
-            }
-        }*/
-
         private void button2_Click(object sender, EventArgs e)//Обратный вывод
         {
             label1.Text = "Обратный вывод";
             listBox3.Items.Clear();
             listBox4_rules.Items.Clear();
 
+            if(list_facts_domainUpDown.SelectedIndex == -1)
+            {
+                MessageBox.Show("Выберите элемент для обратного вывода.");
+                return;
+            }    
+
             for(int i = 0; i < using_facts.Count; i++)
             {
                 TreeFactsNode fact = new TreeFactsNode(using_facts[i], new List<TreeFactsNode>());
-                Recurse_1(fact);
+                Addition_using_facts_recurse(fact);
             }
 
             string id_fact = facts[list_facts_domainUpDown.Text.ToString()];
@@ -226,19 +208,27 @@ namespace ProductionModel
             Recurse(root);
 
             if (root.IsCover == true)
+            {
                 label_res_reverse_output.Text = "Из выбранных фактов вывод возможен";
+                Print(root);
+            }
             else
                 label_res_reverse_output.Text = "Из выбранных фактов вывод невозможен";
 
+
         }
-        private void Recurse_1(TreeFactsNode root)
+        /// <summary>
+        /// раскладывает выбранные пользоввателем факты до атомарных и добавляет в using_facts
+        /// </summary>
+        /// <param name="root"></param>
+        private void Addition_using_facts_recurse(TreeFactsNode root)
         {
             for (int i = 0; i < rules.Keys.Count; i++)//идем по правилам
             {
                 string key_fact = rules.ElementAt(i).Value[0];
                 if (key_fact == root.Value)
                 {
-                    listbox4_rules_completion(i);//добавляем в список используемых правил
+                    //listbox4_rules_completion(i);//добавляем в список используемых правил
                     string rule_id = rules.ElementAt(i).Key;
                     List<string> rule = rules.ElementAt(i).Value;
                     List<string> children = new List<string>();
@@ -252,23 +242,21 @@ namespace ProductionModel
                         TreeFactsNode c = new TreeFactsNode(root, children[j], empty_node_list);
                         root.Children.Add(c);
                         using_facts.Add(c.Value);
-                        Recurse_1(c);
+                        Addition_using_facts_recurse(c);
                     }
                 }
             }
         }
+        /// <summary>
+        /// строит дерево целевого факта
+        /// </summary>
+        /// <param name="root"></param>
         private void Recurse(TreeFactsNode root)
         {
             if (root == null) return;
 
-            for(int i = 0; i < using_facts.Count; i++)//отмечаем узлы-истинные_факты
-            {
-                if (root.Value == using_facts[i])
-                {
-                    root.IsCover = true;
-                    break;
-                }
-            }
+            if (using_facts.Contains(root.Value))
+                root.IsCover = true;
 
             for (int i = 0; i < rules.Keys.Count; i++)//идем по правилам
             {
@@ -277,27 +265,36 @@ namespace ProductionModel
                 {
                     string rule_id = rules.ElementAt(i).Key;
                     List<string> rule = rules.ElementAt(i).Value;
-                    listbox4_rules_completion(i);//добавляем в список используемых правил
-                    List<string> children = new List<string>();
                     for (int j = 1; j < rule.Count; j++)
                     {
-                        children.Add(rule[j]);
-                    }
-                    for (int j = 0; j < children.Count; j++)
-                    {
                         List<TreeFactsNode> empty_node_list = new List<TreeFactsNode>();
-                        TreeFactsNode c = new TreeFactsNode(root, children[j], empty_node_list);
+                        TreeFactsNode c = new TreeFactsNode(root, rule[j], empty_node_list);
                         root.Children.Add(c);
                         Recurse(c);
                     }
                     if (root.Children.Where(x => x.IsCover == true).Count() == 2)//если дочерние узлы отмечены, то отмечаем родителя
                         root.IsCover = true;
-                    //break;
                 }
             }
         }
+        /// <summary>
+        /// заполняет список правил, учавствующих в построении дерева целевого факта
+        /// </summary>
+        /// <param name="root"></param>
+        private void Print(TreeFactsNode root)
+        {
+            if(root.Children.Count == 0)
+            {
+                return;
+            }
+            Print(root.Children[0]);
+            Print(root.Children[1]);
 
-        private void listbox4_rules_completion(int i)
+            string rule = inverseDic_facts[root.Children[0].Value] + " + " + inverseDic_facts[root.Children[1].Value] + " = " + inverseDic_facts[root.Value];
+            listBox4_rules.Items.Add(rule);
+        }
+
+        private void Print(int i)
         {
             string rule_id = rules.ElementAt(i).Key;
             string rule = "";
@@ -315,6 +312,7 @@ namespace ProductionModel
             using_facts.Clear();
             listBox2.Items.Clear();
             listBox3.Items.Clear();
+            listBox4_rules.Items.Clear();
         }
 
         private void listBox2_DoubleClick(object sender, EventArgs e)

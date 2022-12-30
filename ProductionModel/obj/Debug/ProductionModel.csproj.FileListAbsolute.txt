@@ -9,3 +9,14 @@ C:\Users\79381\Desktop\sfedu\7_семестр\ИС\ProductionModel\ProductionMod
 C:\Users\79381\Desktop\sfedu\7_семестр\ИС\ProductionModel\ProductionModel\obj\Debug\ProductionModel.csproj.CoreCompileInputs.cache
 C:\Users\79381\Desktop\sfedu\7_семестр\ИС\ProductionModel\ProductionModel\obj\Debug\ProductionModel.exe
 C:\Users\79381\Desktop\sfedu\7_семестр\ИС\ProductionModel\ProductionModel\obj\Debug\ProductionModel.pdb
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\д\a\ProductoinModelOfKnowledge\ProductionModel\bin\Debug\ProductionModel.exe.config
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\д\a\ProductoinModelOfKnowledge\ProductionModel\bin\Debug\ProductionModel.exe
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\д\a\ProductoinModelOfKnowledge\ProductionModel\bin\Debug\ProductionModel.pdb
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\д\a\ProductoinModelOfKnowledge\ProductionModel\obj\Debug\ProductionModel.csproj.AssemblyReference.cache
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\д\a\ProductoinModelOfKnowledge\ProductionModel\obj\Debug\ProductionModel.csproj.SuggestedBindingRedirects.cache
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\д\a\ProductoinModelOfKnowledge\ProductionModel\obj\Debug\ProductionModel.Form1.resources
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\д\a\ProductoinModelOfKnowledge\ProductionModel\obj\Debug\ProductionModel.Properties.Resources.resources
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\д\a\ProductoinModelOfKnowledge\ProductionModel\obj\Debug\ProductionModel.csproj.GenerateResource.cache
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\д\a\ProductoinModelOfKnowledge\ProductionModel\obj\Debug\ProductionModel.csproj.CoreCompileInputs.cache
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\д\a\ProductoinModelOfKnowledge\ProductionModel\obj\Debug\ProductionModel.exe
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\д\a\ProductoinModelOfKnowledge\ProductionModel\obj\Debug\ProductionModel.pdb
