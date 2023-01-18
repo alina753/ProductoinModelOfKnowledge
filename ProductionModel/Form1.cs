@@ -19,6 +19,10 @@ namespace ProductionModel
         /// </summary>
         List<string> using_facts = new List<string>();
         /// <summary>
+        /// rules used in reverse output
+        /// </summary>
+        List<string> used_rules = new List<string>();
+        /// <summary>
         /// [name, id]
         /// </summary>
         Dictionary<string, string> facts = new Dictionary<string, string>();
@@ -65,7 +69,7 @@ namespace ProductionModel
                 listBox1.Items.Add(name);
 
                 //заполняем список фактов
-                list_facts_domainUpDown.Items.Add(name);
+                listBox5.Items.Add(name);
             }
 
             inverseDic_facts = facts.ToDictionary(g => g.Value,g => g.Key);
@@ -84,6 +88,20 @@ namespace ProductionModel
             {
                 listBox2.Items.Add(fact);
                 using_facts.Add(fact_id);
+            }
+        }
+
+        private void using_facts_completion()
+        {
+            for( int i = 1; i < listBox2.Items.Count; i++)
+            {
+                string fact = listBox2.Items[i].ToString();
+                string fact_id = facts[fact].ToString();
+
+                if (!using_facts.Contains(fact))
+                {
+                    using_facts.Add(fact_id);
+                }
             }
         }
 
@@ -189,19 +207,22 @@ namespace ProductionModel
             listBox3.Items.Clear();
             listBox4_rules.Items.Clear();
 
-            if(list_facts_domainUpDown.SelectedIndex == -1)
+            if(listBox5.SelectedIndex == -1)
             {
                 MessageBox.Show("Выберите элемент для обратного вывода.");
                 return;
-            }    
+            }
 
-            for(int i = 0; i < using_facts.Count; i++)
+            using_facts.Clear();
+            using_facts_completion();
+            //раскладываем выбранные факты на составляющие
+            for (int i = 0; i < using_facts.Count; i++)
             {
                 TreeFactsNode fact = new TreeFactsNode(using_facts[i], new List<TreeFactsNode>());
                 Addition_using_facts_recurse(fact);
             }
 
-            string id_fact = facts[list_facts_domainUpDown.Text.ToString()];
+            string id_fact = facts[listBox5.SelectedItem.ToString()];
             List<TreeFactsNode> children = new List<TreeFactsNode>();
             TreeFactsNode root = new TreeFactsNode(id_fact, children);
             
@@ -214,7 +235,6 @@ namespace ProductionModel
             }
             else
                 label_res_reverse_output.Text = "Из выбранных фактов вывод невозможен";
-
 
         }
         /// <summary>
@@ -287,11 +307,23 @@ namespace ProductionModel
             {
                 return;
             }
+            
             Print(root.Children[0]);
             Print(root.Children[1]);
 
             string rule = inverseDic_facts[root.Children[0].Value] + " + " + inverseDic_facts[root.Children[1].Value] + " = " + inverseDic_facts[root.Value];
+
             listBox4_rules.Items.Add(rule);
+
+            if (root.Children.Count > 2)
+            {
+                Print(root.Children[2]);
+                Print(root.Children[3]);
+
+                rule = inverseDic_facts[root.Children[2].Value] + " + " + inverseDic_facts[root.Children[3].Value] + " = " + inverseDic_facts[root.Value];
+
+                listBox4_rules.Items.Add(rule);
+            }
         }
 
         private void Print(int i)

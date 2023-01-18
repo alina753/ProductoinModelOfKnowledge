@@ -36,8 +36,8 @@
             this.clear = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.listBox4_rules = new System.Windows.Forms.ListBox();
-            this.list_facts_domainUpDown = new System.Windows.Forms.DomainUpDown();
             this.label_res_reverse_output = new System.Windows.Forms.Label();
+            this.listBox5 = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // listBox1
@@ -88,7 +88,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.button2.Location = new System.Drawing.Point(550, 289);
+            this.button2.Location = new System.Drawing.Point(831, 249);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(241, 58);
             this.button2.TabIndex = 4;
@@ -99,7 +99,7 @@
             // clear
             // 
             this.clear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.clear.Location = new System.Drawing.Point(558, 436);
+            this.clear.Location = new System.Drawing.Point(815, 436);
             this.clear.Name = "clear";
             this.clear.Size = new System.Drawing.Size(241, 58);
             this.clear.TabIndex = 5;
@@ -111,7 +111,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label1.Location = new System.Drawing.Point(280, 26);
+            this.label1.Location = new System.Drawing.Point(619, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(118, 25);
             this.label1.TabIndex = 10;
@@ -125,34 +125,37 @@
             "Использованные правила:"});
             this.listBox4_rules.Location = new System.Drawing.Point(550, 69);
             this.listBox4_rules.Name = "listBox4_rules";
-            this.listBox4_rules.Size = new System.Drawing.Size(241, 164);
+            this.listBox4_rules.Size = new System.Drawing.Size(241, 324);
             this.listBox4_rules.TabIndex = 12;
-            // 
-            // list_facts_domainUpDown
-            // 
-            this.list_facts_domainUpDown.Location = new System.Drawing.Point(550, 249);
-            this.list_facts_domainUpDown.Name = "list_facts_domainUpDown";
-            this.list_facts_domainUpDown.Size = new System.Drawing.Size(249, 22);
-            this.list_facts_domainUpDown.TabIndex = 13;
-            this.list_facts_domainUpDown.Text = "Проверить выводимость факта:";
             // 
             // label_res_reverse_output
             // 
             this.label_res_reverse_output.AutoSize = true;
             this.label_res_reverse_output.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label_res_reverse_output.Location = new System.Drawing.Point(545, 363);
+            this.label_res_reverse_output.Location = new System.Drawing.Point(826, 323);
             this.label_res_reverse_output.Name = "label_res_reverse_output";
             this.label_res_reverse_output.Size = new System.Drawing.Size(230, 25);
             this.label_res_reverse_output.TabIndex = 15;
             this.label_res_reverse_output.Text = "Результат будет здесь";
             // 
+            // listBox5
+            // 
+            this.listBox5.FormattingEnabled = true;
+            this.listBox5.ItemHeight = 16;
+            this.listBox5.Items.AddRange(new object[] {
+            "Выбор целевого факта:"});
+            this.listBox5.Location = new System.Drawing.Point(831, 76);
+            this.listBox5.Name = "listBox5";
+            this.listBox5.Size = new System.Drawing.Size(241, 164);
+            this.listBox5.TabIndex = 16;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(979, 517);
+            this.ClientSize = new System.Drawing.Size(1086, 517);
+            this.Controls.Add(this.listBox5);
             this.Controls.Add(this.label_res_reverse_output);
-            this.Controls.Add(this.list_facts_domainUpDown);
             this.Controls.Add(this.listBox4_rules);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.clear);
@@ -179,8 +182,8 @@
         private System.Windows.Forms.Button clear;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox listBox4_rules;
-        private System.Windows.Forms.DomainUpDown list_facts_domainUpDown;
         private System.Windows.Forms.Label label_res_reverse_output;
+        private System.Windows.Forms.ListBox listBox5;
     }
 }
 
