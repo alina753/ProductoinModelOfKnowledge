@@ -1,0 +1,5 @@
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\Prod\Prod\obj\Debug\Prod.csproj.AssemblyReference.cache
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\Prod\Prod\obj\Debug\Prod.csproj.SuggestedBindingRedirects.cache
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\Prod\Prod\obj\Debug\Prod.Properties.Resources.resources
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\Prod\Prod\obj\Debug\Prod.csproj.GenerateResource.cache
+C:\Users\79381\Desktop\sfedu\7_семестр\ИС\Prod\Prod\obj\Debug\Prod.csproj.CoreCompileInputs.cache

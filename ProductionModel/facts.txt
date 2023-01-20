@@ -1,3 +1,0 @@
-(deffacts elements "Some elements"
-    (elem (name Огонь))
-    
